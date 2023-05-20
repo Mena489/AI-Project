@@ -184,7 +184,7 @@ class Board:
             self._get_grid_cordinates_for_click()[column][0] + TOP,
         )
 
-    def minimax(self, b, depth, alpha, beta, maximizingPlayer):
+    def minimax(self, b, depth, alpha, beta, maximizingPlayer,alpha_beta_pruning=True):
         valid_locations = self.get_valid_locations(b)
         is_terminal = len(valid_locations) == 0 or self.winning_move(b, AI) or self.winning_move(b, PLAYER)
         if depth == 0 or is_terminal:
@@ -210,9 +210,10 @@ class Board:
                 if new_score > value:
                     value = new_score
                     column = col
-                alpha = max(alpha, value)
-                if alpha >= beta:
-                    break
+                if alpha_beta_pruning:
+                    alpha = max(alpha, value)
+                    if alpha >= beta:
+                        break
             return column, value
         else:
             value = 100000
@@ -227,9 +228,10 @@ class Board:
                 if new_score < value:
                     value = new_score
                     column = col
-                beta = min(beta, value)
-                if alpha >= beta:
-                    break
+                if alpha_beta_pruning:
+                    beta = min(beta, value)
+                    if alpha >= beta:
+                        break
             return column, value
 
     def score_position(self, b, piece):
