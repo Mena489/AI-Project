@@ -27,7 +27,7 @@ def main():
         # print("Selected column: " + str(random_column))
         # board.print_grid(game_board)
 
-        col, minimax_score = board.minimax(game_board, 6, -math.inf, math.inf, True)
+        col, minimax_score = board.minimax(game_board, 6, -math.inf, math.inf, True, True)
         # print(game_board)
 
         if board.is_valid_location(game_board, col):
